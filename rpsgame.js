@@ -83,8 +83,51 @@ function computerPlay() {
     return move;
 }
 
-const playerSelection = capitalizeMove(prompt("Rock, Paper, Scissors"));
-const computerSelection = computerPlay();
-console.log("Computer chose:\n" + computerSelection + "\n");
-console.log("Player chose: \n");
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let roundCounter = 1;
+    console.log("Moving on to round " + roundCounter + "\n");
+
+    while(playerScore < 3 && computerScore < 3 && roundCounter <= 5){
+        console.log("Round " + roundCounter);
+        console.log("Player score: " + playerScore + "\nComputer score: " + computerScore + "\n\n");
+
+        const playerSelection = capitalizeMove(prompt("Rock, Paper, Scissors"));
+        const computerSelection = computerPlay();
+        
+        console.log("Computer chose:\n" + computerSelection + "\n");
+        console.log("Player chose: \n");
+
+        let decision = playRound(playerSelection, computerSelection);
+        console.log("\n" + decision);
+        
+        if (decision == winRound(playerSelection, computerSelection)) {
+            playerScore++;
+            console.log("One point to the player!\n\n----------------------------------------------")
+            roundCounter++;
+        } else if (decision == loseRound(playerSelection, computerSelection)) {
+            console.log("One point to the computer!\n\n----------------------------------------------")
+            computerScore++;
+            roundCounter++;
+        } else if (decision == "Tie!") {
+            console.log("No winners! \n\n") 
+            roundCounter++;
+        } else {
+            console.log("The user input an unrecognized move. The match shall be restarted \n\n");
+        }
+    }
+
+    console.log("Final tally:\n" + "Player - " + playerScore + "\nComputer - " + computerScore);
+    if(playerScore > computerScore) {
+        console.log("The player won the game!");
+    } else if(computerScore > playerScore) {
+        console.log("The computer won the game!")
+    } else {
+        console.log("The game is a draw!")
+    }
+    console.log("Thank you for playing!");
+}
+
+// MAIN COMMANDS TO BE RAN
+game();
